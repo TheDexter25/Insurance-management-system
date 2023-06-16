@@ -72,14 +72,13 @@ public class Client {
 
     @Override
     public String toString() {
-        return "Client{" +
+        return "Client:  " +
                 "name='" + name + '\'' +
                 ", contact='" + contact + '\'' +
                 ", policyNumber='" + policyNumber + '\'' +
                 ", policyName='" + policyName + '\'' +
                 ", startDate='" + startDate + '\'' +
-                ", expiryDate='" + expiryDate + '\'' +
-                '}';
+                ", expiryDate='" + expiryDate + '\'';
     }
 
     public static Client readClientUsingPrompt(Scanner scn) {
@@ -98,5 +97,12 @@ public class Client {
         String expiryDate = scn.nextLine();
 
         return new Client(name, contact, policyNumber, policyName,startDate,expiryDate);
+    }
+
+    public static String updateClientUsingPrompt(Scanner scn){
+        scn.nextLine();
+        System.out.println("Enter the Policy Number: ");
+        String policyNumber = scn.nextLine();
+        return policyNumber;
     }
 }
