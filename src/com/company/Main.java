@@ -52,7 +52,9 @@ public class Main {
                     System.out.println(client);
                     break;
                 case 2:
-                    System.out.println("Updating a client");
+//                    System.out.println("Updating a client");
+                    String s = Client.updateClientUsingPrompt(scn);
+                    db.update(s);
                     break;
                 case 3:
                     System.out.println("Deleting a client");
