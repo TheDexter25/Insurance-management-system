@@ -52,7 +52,6 @@ public class Database {
         }
 
         public void update(String s){
-            String sql = "";
             try(Connection cn = this.connecthis()){
                 Scanner sc = new Scanner(System.in);
                 System.out.println("--- WHAT DO YOU WANT TO UPDATE? ---");
@@ -62,37 +61,42 @@ public class Database {
                 System.out.println("--- PLEASE CHOOSE AN OPTION ---");
                 int choice = sc.nextInt();
                 sc.nextLine();
+                String sql ="UPDATE client SET %s = '%s' WHERE policyNumber = '%s' ";
+                String sql1 = "UPDATE client SET %s = '%s', %s = '%s' WHERE policyNumber = '%s'";
+                PreparedStatement psmt = null;
                 switch(choice){
                     case 1:
-                        sql = "UPDATE client SET policyNumber = ? WHERE policyNumber = "+s;
                         System.out.print("Policy Number: ");
                         String policyNumber = sc.nextLine();
-                        PreparedStatement psmt = cn.prepareStatement(sql);
-                        psmt.setString(1,policyNumber);
+                        psmt = cn.prepareStatement(String.format(sql,"policyNumber", policyNumber,s));
+//                        psmt.setString(1,"policyNumber");
+//                        psmt.setString(2, policyNumber);
+//                        psmt.setString(3, s);
                         psmt.executeUpdate();
                         System.out.println("Record Updated!");
                         break;
 
                     case 2:
-                        sql = "UPDATE client SET phoneNumber = ? WHERE policyNumber = "+s;
                         System.out.print("Phone Number: ");
                         String phoneNumber = sc.nextLine();
-                        PreparedStatement psmt1 = cn.prepareStatement(sql);
-                        psmt1.setString(1,phoneNumber);
-                        psmt1.executeUpdate();
+                        psmt = cn.prepareStatement(String.format(sql, "phoneNumber", phoneNumber, s));
+                        /*psmt.setString(1,"phoneNumber");
+                        psmt.setString(2,phoneNumber);
+                        psmt.setString(3,s);*/
+                        psmt.executeUpdate();
                         System.out.println("Record Updated!");
                         break;
 
                     case 3:
-                        sql = "UPDATE client SET startDate = ?,expiryDate = ? WHERE policyNumber = "+s;
                         System.out.print("Start Date: ");
                         String startDate = sc.nextLine();
                         System.out.print("Expiry Date: ");
                         String expiryDate = sc.nextLine();
-                        PreparedStatement psmt2 = cn.prepareStatement(sql);
-                        psmt2.setString(1,startDate);
-                        psmt2.setString(2,expiryDate);
-                        psmt2.executeUpdate();
+                        psmt = cn.prepareStatement(String.format(sql1, "startDate",startDate,"expiryDate",expiryDate,s));
+//                        psmt.setString(1,"startDate");
+//                        psmt.setString(2,startDate);
+//                        psmt.setString(3,s);
+                        psmt.executeUpdate();
                         System.out.println("Record Updated!");
                         break;
                     default:
