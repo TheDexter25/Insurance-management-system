@@ -1,9 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-import java.sql.*;
 
 public class Main {
 
@@ -64,7 +61,7 @@ public class Main {
 //                    for(Client clientItem : clients) {
 //                        System.out.println(clientItem);
 //                    }
-//                    System.out.println("\n\n");
+                    System.out.println("\n\n");
                     break;
                 case 5:
                     isRunning = false;
