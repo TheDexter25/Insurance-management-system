@@ -49,12 +49,14 @@ public class Main {
                     System.out.println(client);
                     break;
                 case 2:
-//                    System.out.println("Updating a client");
-                    String s = Client.updateClientUsingPrompt(scn);
+                   /* This Updates the client */
+                    String s = Client.getPolicyNumberUsingPrompt(scn);
                     db.update(s);
                     break;
                 case 3:
-                    System.out.println("Deleting a client");
+//                    System.out.println("Deleting a client");
+                    String s1 = Client.getPolicyNumberUsingPrompt(scn);
+                    db.delete(s1);
                     break;
                 case 4:
                     System.out.println("\n\nClient list:\n\n");

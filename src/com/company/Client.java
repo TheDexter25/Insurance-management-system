@@ -99,7 +99,7 @@ public class Client {
         return new Client(name, contact, policyNumber, policyName,startDate,expiryDate);
     }
 
-    public static String updateClientUsingPrompt(Scanner scn){
+    public static String getPolicyNumberUsingPrompt(Scanner scn){
         scn.nextLine();
         System.out.println("Enter the Policy Number: ");
         String policyNumber = scn.nextLine();

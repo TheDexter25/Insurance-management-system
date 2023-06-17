@@ -58,6 +58,7 @@ public class Database {
                 System.out.println("1. Policy Number");
                 System.out.println("2. Phone Number");
                 System.out.println("3. Dates");
+                System.out.println("4. Exit");
                 System.out.println("--- PLEASE CHOOSE AN OPTION ---");
                 int choice = sc.nextInt();
                 sc.nextLine();
@@ -99,6 +100,8 @@ public class Database {
                         psmt.executeUpdate();
                         System.out.println("Record Updated!");
                         break;
+                    case 4:
+                        return;
                     default:
                         System.out.println("Invalid Choice!");
                         break;
@@ -110,6 +113,29 @@ public class Database {
                 System.out.println(e.getMessage());
             }
 
+        }
+
+
+        public void delete(String s){
+            Scanner sc= new Scanner(System.in);
+            System.out.println("Are you sure you want to delete this record? (Y/N)");
+            String result = sc.nextLine();
+            if(result.equals("Y")){
+            }
+            else if(result.equals("N")){
+                return;
+            }
+            else{
+                System.out.println("Invalid response");
+                return;
+            }
+            try(Connection cn = this.connecthis();){
+                PreparedStatement psmt = cn.prepareStatement("DELETE FROM client where policyNumber = '" +s+"'");
+                psmt.executeUpdate();
+                System.out.println("Record Deleted!");
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
         }
 
 //    public static void main(String[] args) {
