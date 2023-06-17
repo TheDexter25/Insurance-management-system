@@ -5,7 +5,13 @@ plugins {
 group 'com.company'
 version '1.0-SNAPSHOT'
 
+compileJava {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+
 build {
+
     sourceSets {
         main {
             java {
