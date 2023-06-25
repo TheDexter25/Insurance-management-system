@@ -28,10 +28,10 @@ public class Database {
 
         try (Connection cn = this.createConnection(); PreparedStatement preparedStatement = cn.prepareStatement(sql)) {
 
-            preparedStatement.setString(1, client.getPolicyNumber());
+            preparedStatement.setLong(1, client.getPolicyNumber());
             preparedStatement.setString(2, client.getPolicyName());
             preparedStatement.setString(3, client.getName());
-            preparedStatement.setString(4, client.getContact());
+            preparedStatement.setLong(4, client.getContact());
             preparedStatement.setString(5, client.getStartDate());
             preparedStatement.setString(6, client.getExpiryDate());
 
@@ -43,7 +43,7 @@ public class Database {
 
     }
 
-    public void update(String s) {
+    public void update(long s) {
         try (Connection cn = this.createConnection()) {
             Scanner sc = new Scanner(System.in);
             System.out.println("--- WHAT DO YOU WANT TO UPDATE? ---");
@@ -60,22 +60,16 @@ public class Database {
             switch (choice) {
                 case 1:
                     System.out.print("Policy Number: ");
-                    String policyNumber = sc.nextLine();
+                    long policyNumber = Verification.verifyPolicyNumber(sc);
                     psmt = cn.prepareStatement(String.format(sql, "policyNumber", policyNumber, s));
-//                        psmt.setString(1,"policyNumber");
-//                        psmt.setString(2, policyNumber);
-//                        psmt.setString(3, s);
                     psmt.executeUpdate();
                     System.out.println("Record Updated!");
                     break;
 
                 case 2:
                     System.out.print("Phone Number: ");
-                    String phoneNumber = sc.nextLine();
+                    long phoneNumber = Verification.verifyPhoneNumber(sc);
                     psmt = cn.prepareStatement(String.format(sql, "phoneNumber", phoneNumber, s));
-                        /*psmt.setString(1,"phoneNumber");
-                        psmt.setString(2,phoneNumber);
-                        psmt.setString(3,s);*/
                     psmt.executeUpdate();
                     System.out.println("Record Updated!");
                     break;
@@ -86,9 +80,6 @@ public class Database {
                     System.out.print("Expiry Date: ");
                     String expiryDate = sc.nextLine();
                     psmt = cn.prepareStatement(String.format(sql1, "startDate", startDate, "expiryDate", expiryDate, s));
-//                        psmt.setString(1,"startDate");
-//                        psmt.setString(2,startDate);
-//                        psmt.setString(3,s);
                     psmt.executeUpdate();
                     System.out.println("Record Updated!");
                     break;
@@ -107,7 +98,7 @@ public class Database {
     }
 
 
-    public void delete(String s) {
+    public void delete(long s) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Are you sure you want to delete this record? (Y/N)");
         String result = sc.nextLine();
@@ -139,30 +130,26 @@ public class Database {
 
         try(Connection cn = this.createConnection(); Statement smt = cn.createStatement();){
             ResultSet rs = null;
+            String s = "Policy Number: "+rs.getString("policyNumber")+
+                    ", Policy Name: "+rs.getString("policyName")+
+                    ", Name: "+rs.getString("name")+
+                    ", Phone Number: "+ rs.getString("phoneNumber")+
+                    ", Start Date: "+rs.getString("startDate")+
+                    ", Expiry Date: "+rs.getString("expiryDate");
             switch(choice){
                 case 1:
                     rs = smt.executeQuery("SELECT * FROM client");
                     while(rs.next()){
-                        System.out.println("Policy Number: "+rs.getString("policyNumber")+
-                                ", Policy Name: "+rs.getString("policyName")+
-                                ", Name: "+rs.getString("name")+
-                                ", Phone Number: "+ rs.getString("phoneNumber")+
-                                ", Start Date: "+rs.getString("startDate")+
-                                ", Expiry Date: "+rs.getString("expiryDate"));
+                        System.out.println(s);
                     }
                     break;
                 case 2:
                     sc.nextLine();
                     System.out.println("Enter Policy Number: ");
-                    String policyN = sc.nextLine();
+                    long policyN = Verification.verifyPolicyNumber(sc);
                     rs = smt.executeQuery("SELECT * FROM client WHERE policyNumber = '"+policyN+"'");
                     while(rs.next()){
-                        System.out.println("Policy Number: "+rs.getString("policyNumber")+
-                                ", Policy Name: "+rs.getString("policyName")+
-                                ", Name: "+rs.getString("name")+
-                                ", Phone Number: "+ rs.getString("phoneNumber")+
-                                ", Start Date: "+rs.getString("startDate")+
-                                ", Expiry Date: "+rs.getString("expiryDate"));
+                        System.out.println(s);
                     }
                     break;
                 case 3:
@@ -171,12 +158,7 @@ public class Database {
                     String name = sc.nextLine();
                     rs = smt.executeQuery("SELECT * FROM client WHERE name = '"+name+"'");
                     while(rs.next()){
-                        System.out.println("Policy Number: "+rs.getString("policyNumber")+
-                                ", Policy Name: "+rs.getString("policyName")+
-                                ", Name: "+rs.getString("name")+
-                                ", Phone Number: "+ rs.getString("phoneNumber")+
-                                ", Start Date: "+rs.getString("startDate")+
-                                ", Expiry Date: "+rs.getString("expiryDate"));
+                        System.out.println(s);
                     }
                     break;
                 case 4:
@@ -185,12 +167,7 @@ public class Database {
                     String policyName = sc.nextLine();
                     rs = smt.executeQuery("SELECT * FROM client WHERE policyName = '"+policyName+"'");
                     while(rs.next()){
-                        System.out.println("Policy Number: "+rs.getString("policyNumber")+
-                                ", Policy Name: "+rs.getString("policyName")+
-                                ", Name: "+rs.getString("name")+
-                                ", Phone Number: "+ rs.getString("phoneNumber")+
-                                ", Start Date: "+rs.getString("startDate")+
-                                ", Expiry Date: "+rs.getString("expiryDate"));
+                        System.out.println(s);
                     }
                     break;
                 case 5:

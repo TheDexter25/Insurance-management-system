@@ -49,11 +49,11 @@ public class Main {
                     System.out.println(client);
                     break;
                 case 2:
-                    String s = Client.getPolicyNumberUsingPrompt(scn);
+                    long s = Client.getPolicyNumberUsingPrompt(scn);
                     db.update(s);
                     break;
                 case 3:
-                    String s1 = Client.getPolicyNumberUsingPrompt(scn);
+                    long s1 = Client.getPolicyNumberUsingPrompt(scn);
                     db.delete(s1);
                     break;
                 case 4:

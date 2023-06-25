@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class Client {
     private String name;
-    private String contact;
-    private String policyNumber;
+    private long contact;
+    private long policyNumber;
     private String policyName;
 
     public String getStartDate() {
@@ -28,7 +28,7 @@ public class Client {
     private String startDate;
     private String expiryDate;
 
-    public Client(String name, String contact, String policyNumber, String policyName,String startDate, String expiryDate) {
+    public Client(String name, long contact, long policyNumber, String policyName,String startDate, String expiryDate) {
         this.name = name;
         this.contact = contact;
         this.policyNumber = policyNumber;
@@ -45,20 +45,20 @@ public class Client {
         this.name = name;
     }
 
-    public String getContact() {
+    public long getContact() {
         return contact;
     }
 
-    public void setContact(String contact) {
+    public void setContact(long contact) {
         this.contact = contact;
     }
 
 
-    public String getPolicyNumber() {
+    public long getPolicyNumber() {
         return policyNumber;
     }
 
-    public void setPolicyNumber(String policyNumber) {
+    public void setPolicyNumber(long policyNumber) {
         this.policyNumber = policyNumber;
     }
 
@@ -86,11 +86,11 @@ public class Client {
         System.out.println("Name: ");
         String name = scn.nextLine();
         System.out.println("Contact: ");
-        String contact = scn.nextLine();
+        long contact = Verification.verifyPhoneNumber(scn);
         System.out.println("Policy Name: ");
         String policyName = scn.nextLine();
         System.out.println("Policy Number: ");
-        String policyNumber = scn.nextLine();
+        long policyNumber = Verification.verifyPolicyNumber(scn);
         System.out.println("Start Date:");
         String startDate = scn.nextLine();
         System.out.println("Expiry Date:");
@@ -99,10 +99,10 @@ public class Client {
         return new Client(name, contact, policyNumber, policyName,startDate,expiryDate);
     }
 
-    public static String getPolicyNumberUsingPrompt(Scanner scn){
+    public static long getPolicyNumberUsingPrompt(Scanner scn){
         scn.nextLine();
         System.out.println("Enter the Policy Number: ");
-        String policyNumber = scn.nextLine();
+        long policyNumber = Verification.verifyPolicyNumber(scn);
         return policyNumber;
     }
 }
