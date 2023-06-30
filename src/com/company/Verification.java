@@ -4,6 +4,11 @@ import java.util.*;
 
 public class Verification {
 
+
+
+    //Takes a long number
+    //if negative says Invalid
+    //if not 10 digits long says Invalid
     public static long verifyPhoneNumber(Scanner sc){
         long number;
         do {
@@ -16,7 +21,9 @@ public class Verification {
                sc.next();
            }
            number = sc.nextLong();
-       }while(number<=0);
+
+
+       }while(number<=0 && countPhoneNumber(number)!=10);
        sc.nextLine();
 
        return number;
@@ -40,18 +47,14 @@ public class Verification {
     }
 
 
-    public static boolean countPhoneNumber(long n){
+    public static int countPhoneNumber(long n){
         int count = 0;
-        boolean result = false;
         while(n>0){
             n = n/10;
             count += 1;
             continue;
         }
-        if(count ==10){
-            result = true;
-        }
-        return result;
+       return count;
     }
 
 }
