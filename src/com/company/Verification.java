@@ -1,60 +1,93 @@
 package com.company;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class Verification {
 
 
+    public static String validatePhoneNumber(Scanner sc){
+        String phoneNo = "";
+        do{
+           phoneNo  = sc.nextLine();
 
-    //Takes a long number
-    //if negative says Invalid
-    //if not 10 digits long says Invalid
-    public static long verifyPhoneNumber(Scanner sc){
-        long number;
-        do {
-            while(!sc.hasNext()){
-                System.out.println("Enter a valid phone number!");
-                sc.next();
+            if (!verifyPhoneNumber(phoneNo)) {
+                System.out.println("Invalid Phone Number!");
             }
-           while(!sc.hasNextLong()){
-               System.out.println("Enter a valid phone number!");
-               sc.next();
-           }
-           number = sc.nextLong();
+        }while(!verifyPhoneNumber(phoneNo));
 
+        return phoneNo;
+    }
+    public static boolean verifyPhoneNumber(String phoneNumber){
 
-       }while(number<=0 && countPhoneNumber(number)!=10);
-       sc.nextLine();
+        if(phoneNumber.length() != 10){
+            return false;
+        }
 
-       return number;
+        for(char c:phoneNumber.toCharArray()){
+            if(!Character.isDigit(c)){
+                return false;
+            }
+        }
+
+       return true;
     }
 
-    public static long verifyPolicyNumber(Scanner sc){
-        long result;
+    public static String validatePolicyNumber(Scanner sc){
+        String policyNo = "";
         do{
-            while(!sc.hasNext()){
-                System.out.println("Please Enter some Input: ");
-                sc.next();
+            policyNo = sc.nextLine();
+
+            if(!verifyPolicyNumber(policyNo)){
+                System.out.println("Invalid Policy Number!");
             }
-            while(!sc.hasNextLong()){
-                System.out.println("Enter a valid Policy Number");
-                sc.next();
+        }while(!verifyPolicyNumber(policyNo));
+
+        return policyNo;
+    }
+
+
+
+    public static boolean verifyPolicyNumber(String s){
+        if(s.length()!=4){
+            return false;
+        }
+
+        for(char c:s.toCharArray()){
+            if(!Character.isDigit(c)){
+                return false;
             }
-            result = sc.nextLong();
-        }while(result<=0);
-        sc.nextLine();
+        }
+
+        return true;
+    }
+
+    public static String validateDate(Scanner sc){
+        String result = " ";
+        do{
+            result = sc.nextLine();
+            if(verifyDate(result)!= true){
+                System.out.println("Invalid Date!");
+            }
+        }while(verifyDate(result)!=true);
         return result;
     }
 
-
-    public static int countPhoneNumber(long n){
-        int count = 0;
-        while(n>0){
-            n = n/10;
-            count += 1;
-            continue;
+    public static boolean verifyDate(String s){
+//        return Pattern.matches("[123]{1}\\d{1}-[01]{1}\\d{1}-\\d{4}",s);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        dateFormat.setLenient(false); // Disable lenient parsing
+        try {
+            dateFormat.parse(s);
+            return true;
+        } catch (ParseException e) {
+            return false;
         }
-       return count;
+
     }
+
+
 
 }

@@ -28,10 +28,10 @@ public class Database {
 
         try (Connection cn = this.createConnection(); PreparedStatement preparedStatement = cn.prepareStatement(sql)) {
 
-            preparedStatement.setLong(1, client.getPolicyNumber());
+            preparedStatement.setString(1, client.getPolicyNumber());
             preparedStatement.setString(2, client.getPolicyName());
             preparedStatement.setString(3, client.getName());
-            preparedStatement.setLong(4, client.getContact());
+            preparedStatement.setString(4, client.getContact());
             preparedStatement.setString(5, client.getStartDate());
             preparedStatement.setString(6, client.getExpiryDate());
 
@@ -43,7 +43,7 @@ public class Database {
 
     }
 
-    public void update(long s) {
+    public void update(String s) {
         try (Connection cn = this.createConnection()) {
             Scanner sc = new Scanner(System.in);
             System.out.println("--- WHAT DO YOU WANT TO UPDATE? ---");
@@ -60,7 +60,7 @@ public class Database {
             switch (choice) {
                 case 1:
                     System.out.print("Policy Number: ");
-                    long policyNumber = Verification.verifyPolicyNumber(sc);
+                    String policyNumber = Verification.validatePolicyNumber(sc);
                     psmt = cn.prepareStatement(String.format(sql, "policyNumber", policyNumber, s));
                     psmt.executeUpdate();
                     System.out.println("Record Updated!");
@@ -68,17 +68,17 @@ public class Database {
 
                 case 2:
                     System.out.print("Phone Number: ");
-                    long phoneNumber = Verification.verifyPhoneNumber(sc);
+                    String phoneNumber = Verification.validatePhoneNumber(sc);
                     psmt = cn.prepareStatement(String.format(sql, "phoneNumber", phoneNumber, s));
                     psmt.executeUpdate();
                     System.out.println("Record Updated!");
                     break;
 
                 case 3:
-                    System.out.print("Start Date: ");
-                    String startDate = sc.nextLine();
-                    System.out.print("Expiry Date: ");
-                    String expiryDate = sc.nextLine();
+                    System.out.print("Start Date(DD-MM-YYYY): ");
+                    String startDate = Verification.validateDate(sc);
+                    System.out.print("Expiry Date(DD-MM-YYYY): ");
+                    String expiryDate = Verification.validateDate(sc);
                     psmt = cn.prepareStatement(String.format(sql1, "startDate", startDate, "expiryDate", expiryDate, s));
                     psmt.executeUpdate();
                     System.out.println("Record Updated!");
@@ -98,7 +98,7 @@ public class Database {
     }
 
 
-    public void delete(long s) {
+    public void delete(String s) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Are you sure you want to delete this record? (Y/N)");
         String result = sc.nextLine();
@@ -145,7 +145,7 @@ public class Database {
                 case 2:
                     sc.nextLine();
                     System.out.println("Enter Policy Number: ");
-                    long policyN = Verification.verifyPolicyNumber(sc);
+                    String policyN = Verification.validatePolicyNumber(sc);
                     rs = smt.executeQuery("SELECT * FROM client WHERE policyNumber = '"+policyN+"'");
                     while(rs.next()){
                         System.out.println( "Policy Number: "+rs.getString("policyNumber")+
