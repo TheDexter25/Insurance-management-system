@@ -10,19 +10,34 @@ compileJava {
     targetCompatibility = '1.8'
 }
 
-build {
+repositories {
+    mavenCentral()
+}
 
-    sourceSets {
-        main {
-            java {
-                srcDir('src')
-            }
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+            exclude 'resources/*'
         }
     }
-
-    dependencies {
-        implementation files('libs/sqlite-jdbc-3.42.0.0.jar')
+    test {
+        java {
+            srcDirs = ['test']
+            exclude 'resources/*'
+        }
     }
+}
+
+dependencies {
+    implementation files('libs/sqlite-jdbc-3.42.0.0.jar')
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.9.3'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.9.3'
+}
+
+test {
+    useJUnitPlatform()
+    failFast(true)
 }
 
 jar {

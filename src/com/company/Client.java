@@ -86,15 +86,15 @@ public class Client {
         System.out.println("Name: ");
         String name = scn.nextLine();
         System.out.println("Contact: ");
-        String contact = scn.nextLine();
+        String contact = Verification.validatePhoneNumber(scn);
         System.out.println("Policy Name: ");
         String policyName = scn.nextLine();
         System.out.println("Policy Number: ");
-        String policyNumber = scn.nextLine();
-        System.out.println("Start Date:");
-        String startDate = scn.nextLine();
-        System.out.println("Expiry Date:");
-        String expiryDate = scn.nextLine();
+        String policyNumber = Verification.validatePolicyNumber(scn);
+        System.out.println("Start Date(DD-MM-YYYY):");
+        String startDate = Verification.validateDate(scn);
+        System.out.println("Expiry Date(DD-MM-YYYY):");
+        String expiryDate = Verification.validateDate(scn);
 
         return new Client(name, contact, policyNumber, policyName,startDate,expiryDate);
     }
@@ -102,7 +102,7 @@ public class Client {
     public static String getPolicyNumberUsingPrompt(Scanner scn){
         scn.nextLine();
         System.out.println("Enter the Policy Number: ");
-        String policyNumber = scn.nextLine();
+        String policyNumber = Verification.validatePolicyNumber(scn);
         return policyNumber;
     }
 }
